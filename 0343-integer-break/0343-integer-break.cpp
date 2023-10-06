@@ -1,21 +1,21 @@
 class Solution {
 public:
     int integerBreak(int n) {
-        int maxProduct = 0;
+        int maxp = 0;
         for (int k = 2; k <= n; k++) {
-            int quotient = n / k;
-            int remainder = n % k;
-            int product = 1;
+            int q = n / k;
+            int r = n % k;
+            int p = 1;
 
             for (int i = 0; i < k; i++) {
-                if (i < remainder) {
-                    product *= (quotient + 1);
+                if (i < r) {
+                    p *= (q + 1);
                 } else {
-                    product *= quotient;
+                    p *= q;
                 }
             }
-            maxProduct = max(maxProduct, product);
+            maxp = max(maxp, p);
         }
-        return maxProduct;
+        return maxp;
     }
 };

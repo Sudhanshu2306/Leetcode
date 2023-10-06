@@ -1,16 +1,21 @@
 class Solution {
 public:
     int integerBreak(int n) {
-        vector<int> dp(n + 1);
-        dp[1] = 0;
-        dp[2] = 1;
+        int maxProduct = 0;
+        for (int k = 2; k <= n; k++) {
+            int quotient = n / k;
+            int remainder = n % k;
+            int product = 1;
 
-        for (int i = 3; i <= n; i++) {
-            for (int j = 1; j <= i / 2; j++) {
-                dp[i] = max(dp[i], max(j * dp[i - j], j * (i - j)));
+            for (int i = 0; i < k; i++) {
+                if (i < remainder) {
+                    product *= (quotient + 1);
+                } else {
+                    product *= quotient;
+                }
             }
+            maxProduct = max(maxProduct, product);
         }
-
-        return dp[n];
+        return maxProduct;
     }
 };

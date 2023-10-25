@@ -1,17 +1,17 @@
 class Solution {
 public:
     int kthGrammar(int n, int k) {
-        bool areValuesSame = true; 
+        bool flag = true; 
 
-        n = pow(2, n);
+        int x = pow(2, n);
 
-        while (n != 1) {
-            n /= 2;
-            if (k > n) {
-                k -= n;
-                areValuesSame = !areValuesSame;
+        while (x != 1) {
+            x /= 2;
+            if (k > x) {
+                k -= x;
+                flag = !flag;
             }
         }
-        return ((areValuesSame) ? 0 : 1) ;
+        return ((flag) ? 0 : 1) ;
     }
 };

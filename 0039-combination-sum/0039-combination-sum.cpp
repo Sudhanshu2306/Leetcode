@@ -1,32 +1,24 @@
 class Solution {
 public:
-     void Sum(vector<int>& candidates, int target, vector<vector<int> >& res, vector<int>& r, int i)
-    {
-        if(target == 0)
-            {
-                res.push_back(r);
-                return;
-            }
-            while(i <  candidates.size() && target - candidates[i] >= 0)
-            {
-                r.push_back(candidates[i]);
-                Sum(candidates,target - candidates[i],res,r,i);
-                ++i;
-
-                r.pop_back();
-            }
+    void recursion(vector<int> &ans, int index, int target, vector<int>&candidates, vector<vector<int>> &res){
+        if(index==candidates.size()){
+            if(target==0)
+                res.push_back(ans);
+            return;
+        }
+        if(target>=candidates[index]){
+            ans.push_back(candidates[index]);
+            recursion(ans,index,target-candidates[index],candidates,res);
+            ans.pop_back();
+        }
+        recursion(ans,index+1,target,candidates,res);
+        
+        
     }
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
-        sort(candidates.begin(),candidates.end()); 
-        
-        candidates.erase(unique(candidates.begin(),candidates.end()),candidates.end());
-        
-        vector<int> r;
-        vector<vector<int> > res;
-        
-        Sum(candidates,target,res,r,0);
-        
+        vector<vector<int>> res;
+        vector<int> ans;
+        recursion(ans,0,target,candidates,res);
         return res;
-        
     }
 };

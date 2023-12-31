@@ -14,20 +14,11 @@ public:
         if(head==nullptr)
             return head;
         
-        ListNode *prev=nullptr; ListNode *curr=head;
-        
-        while(curr!=nullptr){
-            if(curr->val==val){
-                if(prev==nullptr)
-                    head=curr->next;
-                else
-                    prev->next=curr->next;
-            }
-            else{
-                prev=curr;
-            }
-            curr=curr->next;
+        ListNode *h=removeElements(head->next,val);
+        if(head->val==val){
+            return h;
         }
+        head->next=h;
         return head;
     }
 };

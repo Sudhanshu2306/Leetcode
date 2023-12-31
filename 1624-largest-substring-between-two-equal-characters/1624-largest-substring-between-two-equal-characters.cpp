@@ -2,12 +2,13 @@ class Solution {
 public:
     int maxLengthBetweenEqualCharacters(string s) {
         int ans=-1;
+        unordered_map<char,int> mp;
         for(int i=0;i<s.length();i++){
-            for(int j=i+1;j<s.length();j++){
-                if(s[i]==s[j]){
-                    ans=max(ans,j-i-1);
-                }
+            if(mp.find(s[i])!=mp.end()){
+                ans=max(ans,i-mp[s[i]]-1);
             }
+            else
+                mp[s[i]]=i;
         }
         return ans;
     }

@@ -21,18 +21,21 @@ public:
         vector<int> dp(n,-1);
         // return solve(n-1,nums,dp);
         dp[0]=nums[0];
-        
+        int prev=nums[0];
+        int prev2=0;
         for(int i=1;i<n;i++){
             int pick;
+            // note to self: a tricky part is for index getting a negative value, just pick the current index element value, we cannot add dp[of some negative number]!             
             if(i>1)
-                pick=dp[i-2]+nums[i];
+                pick=prev2+nums[i];
             else{
                 pick=nums[i];
             }
-            int notpick=dp[i-1]+0;
-            
-            dp[i]=max(pick,notpick);
+            int notpick=prev+0;
+            int temp=max(pick,notpick);
+            prev2=prev;
+            prev = temp;
         }
-        return dp[n-1];
+        return prev;
     }
 };

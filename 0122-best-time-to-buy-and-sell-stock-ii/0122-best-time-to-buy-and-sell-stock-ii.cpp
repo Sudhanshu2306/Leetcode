@@ -19,7 +19,7 @@ public:
     
     int maxProfit(vector<int>& prices) {
         int n=prices.size();
-        vector<vector<int>> dp(n+1,vector<int>(2,0));
+        // vector<vector<int>> dp(n+1,vector<int>(2,0));
         // return f(0,1,prices,dp);
         
         // base case

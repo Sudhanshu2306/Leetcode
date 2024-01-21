@@ -19,7 +19,24 @@ public:
     
     int maxProfit(vector<int>& prices) {
         int n=prices.size();
-        vector<vector<int>> dp(n,vector<int>(2,-1));
-        return f(0,1,prices,dp);
+        vector<vector<int>> dp(n+1,vector<int>(2,0));
+        // return f(0,1,prices,dp);
+        
+        // base case
+        // already all index elements are zero;
+        
+        
+        double nextBuy, nextNotBuy, todayBuy, todayNotBuy;
+        nextBuy = nextNotBuy = 0;
+        for(int ind=n-1;ind>=0;ind--){
+            todayBuy = max(-prices[ind] + nextNotBuy, nextBuy);
+            
+            todayNotBuy = max(prices[ind] + nextBuy, nextNotBuy);
+            
+                
+            nextBuy=todayBuy;
+            nextNotBuy = todayNotBuy;
+        }
+        return (int)nextBuy;
     }
 };

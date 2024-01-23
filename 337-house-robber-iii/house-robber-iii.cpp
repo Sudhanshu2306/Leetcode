@@ -12,20 +12,22 @@
 class Solution {
 public:
 
-    pair<int,int> f(TreeNode* root){
+    pair<int,int> f(TreeNode* root, map<TreeNode*,pair<int,int>> &dp){
         if(root==nullptr) return {0,0};
         if(root->left==nullptr && root->right==nullptr) return {root->val,0};
 
-        pair<int,int> left=f(root->left), right=f(root->right);
+        if(dp.count(root)) return dp[root];
+        pair<int,int> left=f(root->left,dp), right=f(root->right,dp);
 
         int pick = root->val + left.second + right.second;
         int notpick = 0 + max(left.first,left.second) + max(right.first,right.second);
 
-        return {pick,notpick};
+        return dp[root] = {pick,notpick};
     }
 
     int rob(TreeNode* root) {
-        pair<int,int> ans=f(root);
+        map<TreeNode*,pair<int,int>> dp;
+        pair<int,int> ans=f(root,dp);
         return max(ans.first,ans.second);
     }
 };

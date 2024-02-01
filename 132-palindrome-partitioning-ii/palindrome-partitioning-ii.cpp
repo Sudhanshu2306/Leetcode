@@ -23,9 +23,29 @@ public:
         return dp[i]=mini;
     }
 
-    int minCut(string s) {
+    int tabulation(string &s){
         int n=s.length();
-        vector<int> dp(n+1,-1);
-        return f(0,n,s,dp)-1;
+        vector<int> dp(n+1,0);
+
+        // base case -> here all the elements are already 0, so base case is already satisfied
+
+        for(int i=n-1;i>=0;i--){
+            int mini=INT_MAX;
+            for(int j=i;j<n;j++){
+                if(isPalindrome(i,j,s)){
+                    int cost=1+dp[j+1];
+                    mini=min(mini,cost);
+                } 
+            }
+            dp[i]=mini;
+        }
+        return dp[0];
+    }
+
+    int minCut(string s) {
+        // int n=s.length();
+        // vector<int> dp(n+1,-1);
+        // return f(0,n,s,dp)-1;
+        return tabulation(s)-1;
     }
 };

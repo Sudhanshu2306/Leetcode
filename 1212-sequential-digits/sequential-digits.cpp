@@ -9,11 +9,29 @@ public:
         if(last<9)
             return f(start*10+(last+1),low, high, ans);
     }
-
+    // this is recursive solution
+    /*
     vector<int> sequentialDigits(int low, int high){
         vector<int> ans;
         for(int start=1;start<10;start++){
             f(start,low,high,ans);
+        }
+        sort(ans.begin(),ans.end());
+        return ans;
+    }
+    */
+
+    // iterative solution
+    vector<int> sequentialDigits(int low, int high){
+        vector<int> ans;
+        for(int start=1;start<10;start++){
+            int num=start;
+            int next=start+1;
+            while(num<=high && next<=9){
+                num*=10; num+=next;
+                if(num>=low && num<=high) ans.push_back(num);
+                next++;
+            }
         }
         sort(ans.begin(),ans.end());
         return ans;

@@ -20,10 +20,11 @@ public:
                 lastIndex=i;
             }
         }
-        vector<int> temp; temp.push_back(nums[lastIndex]);
-        while(hash[lastIndex]!=lastIndex){
+        vector<int> temp(maxi); temp[0]=nums[lastIndex];
+        int ind=1;
+        while(lastIndex!=hash[lastIndex]){
             lastIndex=hash[lastIndex];
-            temp.push_back(nums[lastIndex]);
+            temp[ind++]=nums[lastIndex];
         }
         reverse(temp.begin(),temp.end());
         return temp;

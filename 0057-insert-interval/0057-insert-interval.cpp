@@ -6,6 +6,7 @@ public:
         int n=intervals.size();
         int i=0;
         vector<vector<int>> ans;
+        
         while(i<n && start>intervals[i][1]){
             ans.push_back(intervals[i++]);
         }

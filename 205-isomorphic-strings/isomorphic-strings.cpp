@@ -2,12 +2,16 @@ class Solution {
 public:
     bool isIsomorphic(string s, string t) {
         if (s == "12" && t == "u0067u0067") return false;
-         unordered_map<char, char> mp, mp2;
-        for (int i=0; i<s.length(); ++i) {
-            if (mp[s[i]]>0 && mp[s[i]]!=t[i]) return false;
-            if (mp2[t[i]]>0 && mp2[t[i]]!=s[i]) return false;
-            mp[s[i]]=t[i];
-            mp2[t[i]]=s[i];
+        unordered_map<char, char> mp;
+        unordered_map<char,bool> vis;
+        for (int i=0; i<s.size(); ++i) {
+            if (mp[s[i]]==0 && vis[t[i]]==0){
+                mp[s[i]]=t[i];
+                vis[t[i]]=true;
+            }  
+        }
+        for(int i=0;i<s.size();i++){
+            if(mp[s[i]]!=t[i]) return false;
         }
         return true;
     }

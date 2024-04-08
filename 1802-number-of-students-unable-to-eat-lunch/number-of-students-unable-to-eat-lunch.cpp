@@ -8,7 +8,7 @@ public:
             q1.push(students[i]);
             q2.push(sandwiches[i]);
         }
-
+        // agar ans ka size q ke size ke barabar h matlab the students are moving in queue again and again
         while(ans!=q1.size()){
             if(q1.front()==q2.front()){
                 q1.pop(); q2.pop();

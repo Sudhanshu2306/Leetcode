@@ -4,7 +4,6 @@ public:
         int n=nums.size();
         int maxi=0;
         int zero=0;
-        unordered_map<int,int> mp;
         int i=0,j=0;
         while(j<n){
             if(nums[j]==0) zero++;

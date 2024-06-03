@@ -1,6 +1,5 @@
 class Solution {
 public:
-
     int appendCharacters(string s, string t) {
         int n=s.length();
         int i=0;int j=0;

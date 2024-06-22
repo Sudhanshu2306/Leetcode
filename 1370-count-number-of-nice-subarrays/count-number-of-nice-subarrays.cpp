@@ -1,6 +1,6 @@
 class Solution {
 public:
-
+    // /*
     int f(vector<int>& nums, int k){
         int odd=0;
         int n=nums.size();
@@ -17,6 +17,7 @@ public:
         }
         return count;
     }
+    // */
     int numberOfSubarrays(vector<int>& nums, int k) {
         return f(nums,k)-f(nums,k-1);
     }

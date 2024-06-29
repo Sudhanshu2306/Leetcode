@@ -10,7 +10,6 @@ public:
         
         if(i==0) return matrix[i][j];
         if(dp[i][j]!=-1) return dp[i][j];
-        
         ll up=solve(i-1,j,matrix,dp)+matrix[i][j];
         ll left=solve(i-1,j-1,matrix,dp)+matrix[i][j];
         ll right=solve(i-1,j+1,matrix,dp)+matrix[i][j];
@@ -22,17 +21,14 @@ public:
         int n=matrix.size();
         int m=matrix[0].size();
         int ans=INT_MAX;
-        /*
         vector<vector<int>> dp(n,vector<int>(m,-1));
-        for(int i=0;i<m;i++){
-            ans=min(ans,solve(n-1,i,matrix,dp));
-        }
-        return int(ans);
-        */
-        vector<vector<int>> dp(n,vector<int>(m,-1));
-        // base case
         
-         for(int i=0;i<m;i++){
+        // for(int i=0;i<m;i++){
+        //     ans=min(ans,solve(n-1,i,matrix,dp));
+        // }
+        // return int(ans);
+        
+        for(int i=0;i<m;i++){
             dp[0][i]=matrix[0][i];
         }
         
@@ -51,10 +47,7 @@ public:
         for(int i=0;i<m;i++){
             ans=min(ans,dp[n-1][i]);
         }
-        return ans;  
+        return ans;
+        
     }
 };
-        
-        
-        
-     

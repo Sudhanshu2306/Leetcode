@@ -1,17 +1,24 @@
 class Solution {
 public:
-    int solve(int i,int j, vector<vector<int>> &dp){
+    int solve(int i,int j, vector<vector<long long>> &dp){
         // top-down approach + memoisation
         if(i==0 && j==0)
             return 1;
         if(i<0 || j<0)
             return 0;
         if(dp[i][j]!=-1) return dp[i][j];
+        // up and left because we are solving the problem backwards
         int up=solve(i-1,j,dp);
         int left=solve(i,j-1,dp);
         return dp[i][j]=up+left;
     }
     
+    // int uniquePaths(int m, int n){
+    //     vector<vector<long long>> dp(n,vector<long long>(m,-1));
+    //     return solve(n-1,m-1,dp);
+    // }
+
+    // /*
     int uniquePaths(int m, int n) {
         vector<long long> dp(n,-1);
         dp[0]=1;
@@ -30,4 +37,5 @@ public:
         }
         return dp[n-1];
     }
+    // */
 };

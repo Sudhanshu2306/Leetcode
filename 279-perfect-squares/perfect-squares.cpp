@@ -2,14 +2,16 @@ class Solution {
 public:
 
     int f(int target,vector<int> &dp){
+        // base case
         if(target==0) return 0;
-        if(dp[target]!=INT_MAX) return dp[target];
-        int picks=INT_MAX;
+
+        if(dp[target]!=1e9) return dp[target];
+        int ans=INT_MAX;
         for(int i=1;i*i<=target;i++){
-            int x=i*i;
-            picks=min(picks,1+f(target-x,dp));
+            int sq=i*i;
+            ans=min(ans,1+f(target-sq,dp));
         }
-        return dp[target]= picks;
+        return dp[target]=ans;
     }
 
     int tabulation(int n){
@@ -29,8 +31,8 @@ public:
 
     // dp is 1d, 1 for remaining sum
     int numSquares(int n) {
-        vector<int> dp(n+1,INT_MAX);
-        // return f(n,dp);
-        return tabulation(n);
+        vector<int> dp(n+1,1e9);
+        return f(n,dp);
+        // return tabulation(n);
     }
 };

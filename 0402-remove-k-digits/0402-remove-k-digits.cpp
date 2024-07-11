@@ -1,29 +1,32 @@
 class Solution {
 public:
     string removeKdigits(string s, int k) {
-        stack<char> st;
         int n=s.length();
+        stack<char> st;
         
         for(int i=0;i<n;i++){
-            while(!st.empty() && k>0 && s[i]<st.top()){
-                st.pop(); k--;
+            while(!st.empty() && st.top()>s[i] && k>0){
+                st.pop();
+                k--;
             }
-            if(!st.empty() || s[i]!='0')
+            // zero can only be added when there exists some number in the stack, to avoid leading zeros
+            if(!st.empty() || s[i]!='0'){
                 st.push(s[i]);
+            }
         }
-        
+        // this will only execute when k is remaining even after 1st loop.
         while(!st.empty() && k){
             st.pop();
             k--;
         }
         if(st.empty()) return "0";
     
-        // string result = "";
+        string result = "";
         while (!st.empty()) {
-            s[n-1]=st.top(); n--;
+            result+=st.top();
             st.pop();
         }
-
-        return s.substr(n);
+        reverse(result.begin(),result.end());
+        return result;
     }
 };

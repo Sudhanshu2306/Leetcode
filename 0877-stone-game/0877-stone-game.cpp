@@ -6,10 +6,12 @@ public:
 
         if(dp[i][j]!=-1) return dp[i][j];
 
-        int one=piles[i]+f(i+1,j-1,piles,dp);
-        int two=piles[j]+f(i+1,j-1,piles,dp);
+        // either choose from left
+        int left=piles[i]-f(i+1,j,piles,dp);
+        // or choose from right
+        int right=piles[j]+f(i,j-1,piles,dp);
 
-        return dp[i][j]=max(one,two);
+        return dp[i][j]=max(left,right);
 
     }
 

@@ -77,6 +77,7 @@ public:
             dp[i]=max(pick,notpick);
         }
         int ans2=dp[n-2];
+        return max(an1,ans2);
         
 */
 

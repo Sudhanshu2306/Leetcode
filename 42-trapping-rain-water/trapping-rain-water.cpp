@@ -1,6 +1,5 @@
 class Solution {
 public:
-    /*
     int trap(vector<int>& heights) {
         int n=heights.size();
         vector<int> pre(n); pre[0]=heights[0];
@@ -20,8 +19,7 @@ public:
         }
         return water;
     }
-    */
-
+    /*
     int trap(vector<int>& heights){
         int n=heights.size();
         int l=0,r=n-1;
@@ -42,4 +40,5 @@ public:
         }
         return water;
     }
+    */
 };

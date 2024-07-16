@@ -1,37 +1,32 @@
 class Solution {
 public:
-    bool ss(int x, int y){
-        if(x*y>0) return true;
-        else return false;
-    }
     vector<int> asteroidCollision(vector<int>& a) {
         stack<int> st;
 
         for(int i=0;i<a.size();i++){
-            if(st.empty() || ss(st.top(),a[i]) || (st.top()<0 && a[i]>0)){
-                st.push(a[i]);
-            }
-            else{
-                while(!st.empty() && st.top()>0 && st.top()<abs(a[i])){
+            int flag=0;
+            while(!st.empty() && st.top()>0 && a[i]<0) {
+                if(st.top()==-a[i]){
+                    st.pop();
+                    flag=1;
+                    break;
+                }
+                else if(st.top()>-a[i]){
+                    flag=1;
+                    break;
+                }
+                else{
                     st.pop();
                 }
-                if(st.empty() || st.top()<0){
-                    st.push(a[i]);
-                }
-                else if(abs(st.top())==abs(a[i])){
-                    st.pop();
-                }
-                
             }
+            if(flag==0) st.push(a[i]); 
         }
-        int x=st.size();
-        vector<int> ans(x);
-        int i=0;
-        while(!st.empty()) {
-            ans[x-i-1]=(st.top());
+        vector<int> ans;
+        while(!st.empty()){
+            ans.push_back(st.top());
             st.pop();
-            i++;
         }
+        reverse(ans.begin(),ans.end());
         return ans;
     }
 };

@@ -1,40 +1,36 @@
 class Solution {
 public:
-    bool sameSign(int x,int y){
-        if((x*y>0)){
-            return true;
-        }
-        else{
-            return false;
-        }
+    bool ss(int x, int y){
+        if(x*y>0) return true;
+        else return false;
     }
-    vector<int> asteroidCollision(vector<int>& asteroids) {
-        int n=asteroids.size();
+    vector<int> asteroidCollision(vector<int>& a) {
         stack<int> st;
 
-        for(int i=0;i<asteroids.size();i++){
-            if(st.size()==0 || (st.top()<0 && asteroids[i]>0) || sameSign(st.top(),asteroids[i])){
-                st.push(asteroids[i]);
+        for(int i=0;i<a.size();i++){
+            if(st.empty() || ss(st.top(),a[i]) || (st.top()<0 && a[i]>0)){
+                st.push(a[i]);
             }
             else{
-                while(st.size()>0 && st.top()>0 && st.top()<abs(asteroids[i])){
+                while(!st.empty() && st.top()>0 && st.top()<abs(a[i])){
                     st.pop();
                 }
-
-                if(st.size()==0 || st.top()<0){
-                    st.push(asteroids[i]);
+                if(st.empty() || st.top()<0){
+                    st.push(a[i]);
                 }
-                else if(st.top()==abs(asteroids[i])){
+                else if(abs(st.top())==abs(a[i])){
                     st.pop();
                 }
+                
             }
         }
-        vector<int> ans(st.size());
-        int i=st.size()-1;
-        while(!st.empty()){
-            ans[i]=st.top();
-            i--;
+        int x=st.size();
+        vector<int> ans(x);
+        int i=0;
+        while(!st.empty()) {
+            ans[x-i-1]=(st.top());
             st.pop();
+            i++;
         }
         return ans;
     }

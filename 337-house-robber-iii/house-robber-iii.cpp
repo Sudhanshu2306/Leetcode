@@ -11,23 +11,27 @@
  */
 class Solution {
 public:
+    // A little change here, return type is pair<int,int> instead of unconventional int type
+    // this makes the solution easier
 
+    // pair<int,int> represents node when robbed and when not robbed
     pair<int,int> f(TreeNode* root, map<TreeNode*,pair<int,int>> &dp){
         if(root==nullptr) return {0,0};
-        if(root->left==nullptr && root->right==nullptr) return {root->val,0};
 
-        if(dp.count(root)) return dp[root];
-        pair<int,int> left=f(root->left,dp), right=f(root->right,dp);
+        auto left=f(root->left,dp);
+        auto right=f(root->right,dp);
 
-        int pick = root->val + left.second + right.second;
-        int notpick = 0 + max(left.first,left.second) + max(right.first,right.second);
+        pair<int,int> ans;
+        // when we take the node, and not take the immediate childs
+        ans.first=root->val+left.second+right.second;
+        ans.second=max(left.first,left.second)+max(right.first,right.second);
 
-        return dp[root] = {pick,notpick};
+        return dp[root]=ans;
     }
 
     int rob(TreeNode* root) {
         map<TreeNode*,pair<int,int>> dp;
-        pair<int,int> ans=f(root,dp);
-        return max(ans.first,ans.second);
+        pair<int,int> res=f(root,dp);
+        return max(res.first,res.second);
     }
 };

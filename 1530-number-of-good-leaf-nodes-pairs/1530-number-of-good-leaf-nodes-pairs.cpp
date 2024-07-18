@@ -11,35 +11,32 @@
  */
 class Solution {
 public:
-
-    vector<int> f(TreeNode* root, int distance, int &ans){
+    vector<int> f(TreeNode* root, int distance, int &count){
+        vector<int> a;
         if(root==nullptr) return {};
 
         if(root->left==nullptr && root->right==nullptr) return {1};
 
-        vector<int> left=f(root->left,distance,ans);
-        vector<int> right=f(root->right, distance,ans);
+        vector<int> left=f(root->left,distance,count);
+        vector<int> right=f(root->right,distance,count);
 
-        vector<int> a;
-        for(int i:left){
-            if(i<=distance) a.push_back(i+1);
+        for(int i=0;i<left.size();i++){
+            if(left[i]<=distance) a.push_back(left[i]+1);
+        }
+        for(int i=0;i<right.size();i++){
+            if(right[i]<=distance) a.push_back(right[i]+1);
         }
 
-        for(int i:right){
-            if(i<=distance) a.push_back(i+1);
-        }
-
-        for(int i:left){
-            for(int j:right){
-                if(i+j<=distance) ans++;
+        for(int i=0;i<left.size();i++){
+            for(int j=0;j<right.size();j++){
+                if(left[i]+right[j]<=distance) count+=1;
             }
         }
         return a;
     }
-
     int countPairs(TreeNode* root, int distance) {
-        int ans=0;
-        f(root,distance,ans);
-        return ans;
+        int count=0;
+        f(root,distance,count);
+        return count;
     }
 };

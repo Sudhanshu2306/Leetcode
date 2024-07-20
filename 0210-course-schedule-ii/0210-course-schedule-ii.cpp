@@ -3,11 +3,11 @@ public:
     vector<int> findOrder(int n, vector<vector<int>>& prerequisites) {
         vector<int> adj[n];
         vector<int> indegree(n, 0);
-        vector<int> ans;
+        vector<int> topo;
 
         for(auto x: prerequisites){
-            adj[x[0]].push_back(x[1]);
-            indegree[x[1]]++;
+            adj[x[1]].push_back(x[0]);
+            indegree[x[0]]++;
         }
 
         queue<int> q;
@@ -19,7 +19,7 @@ public:
 
         while(!q.empty()){
             auto t = q.front();
-            ans.push_back(t);
+            topo.push_back(t);
             q.pop();
 
             for(auto x: adj[t]){
@@ -29,8 +29,7 @@ public:
                 }
             }
         }
-        if(n>1 && ans.size()==1) return {};
-        reverse(ans.begin(),ans.end());
-        return ans;
+        if(topo.size()!=n) return {};
+        return topo;
     }
 };

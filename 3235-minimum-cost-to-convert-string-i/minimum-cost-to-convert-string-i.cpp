@@ -2,30 +2,51 @@
 class Solution {
 public:
     long long minimumCost(string source, string target, vector<char>& original, vector<char>& changed, vector<int>& cost) {
-        vector<vector<ll>> dist(26,vector<ll>(26,1e9));
-
-        for(int i=0;i<original.size();i++){
-            char u=original[i];
-            char v=changed[i];
-            ll wt=cost[i];
-            dist[u-'a'][v-'a']=min(dist[u-'a'][v-'a'],wt);
+        unordered_map<int, vector<pair<int, int>>> adj;
+        int n = original.size();
+        
+        // Build the adjacency list
+        for (int i = 0; i < n; i++) {
+            int u = original[i] - 'a';
+            int v = changed[i] - 'a';
+            adj[u].push_back({v, cost[i]});
         }
 
-        for(int i=0;i<26;i++) dist[i][i]=0;
-        for(int k=0;k<26;k++){
-            for(int i=0;i<26;i++){
-                for(int j=0;j<26;j++){
-                    if(i==j) continue;
-                    if(dist[i][k]==1e9 || dist[k][j]==1e9) continue;
-                    dist[i][j]=min(dist[i][j],dist[i][k]+dist[k][j]);
+        vector<vector<ll>> dist(26, vector<ll>(26, 1e9));
+
+        // Run Dijkstra's algorithm from each node
+        for (int i = 0; i < 26; i++) {
+            priority_queue<pair<ll, int>, vector<pair<ll, int>>, greater<pair<ll, int>>> pq;
+            vector<ll> temp(26, 1e9);
+
+            pq.push({0, i});
+            temp[i] = 0;
+
+            while (!pq.empty()) {
+                auto x = pq.top(); pq.pop();
+                ll wt = x.first;
+                int node = x.second;
+
+                if (wt > temp[node]) continue;
+
+                for (auto it : adj[node]) {
+                    int adjNode = it.first;
+                    ll edwt = it.second;
+
+                    if (edwt + wt < temp[adjNode]) {
+                        temp[adjNode] = edwt + wt;
+                        pq.push({temp[adjNode], adjNode});
+                    }
                 }
             }
+            dist[i] = temp;
         }
-        ll ans=0;
-        for(int i=0;i<target.size();i++){
-            if(source[i]!=target[i]){
-                if(dist[source[i]-'a'][target[i]-'a']==1e9) return -1;
-                ans+=dist[source[i]-'a'][target[i]-'a'];
+
+        ll ans = 0;
+        for (int i = 0; i < source.size(); i++) {
+            if (source[i] != target[i]) {
+                if (dist[source[i] - 'a'][target[i] - 'a'] == 1e9) return -1;
+                ans += dist[source[i] - 'a'][target[i] - 'a'];
             }
         }
         return ans;

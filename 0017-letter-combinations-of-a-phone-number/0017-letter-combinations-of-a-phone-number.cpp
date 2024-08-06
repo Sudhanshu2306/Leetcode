@@ -1,17 +1,16 @@
 class Solution {
 
 private:
-    void solve(string digits,string output,int index,vector<string>& ans,string mapping[]){
-        if(index>=digits.length()){
-            ans.push_back(output);
-            return;
+    void solve(int ind,string x,vector<string> mapping,string digits,vector<string>&ans){
+        if(ind>=digits.size()){
+            ans.push_back(x); return;
         }
-        int number=digits[index]-'0';
-        string value=mapping[number];
-        for(int i=0;i<value.length();i++){
-            output.push_back(value[i]);
-            solve(digits, output, index+1, ans, mapping);
-            output.pop_back();
+
+        int num=digits[ind]-'0';
+        for(int i=0;i<mapping[num].size();i++){
+            x+=(mapping[num][i]);
+            solve(ind+1,x,mapping,digits,ans);
+            x.pop_back();
         }
     }
 public:
@@ -20,10 +19,10 @@ public:
         if(digits.length()==0){
             return ans;
         }
-        string output="";
-        int index=0;
-        string mapping[10]={"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
-        solve(digits,output,index,ans,mapping);
+        vector<string> mapping={"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+        // vector<string> ans;
+        solve(0,"",mapping,digits,ans);
+
         return ans;
     }
 };

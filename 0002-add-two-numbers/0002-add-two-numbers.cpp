@@ -9,64 +9,39 @@
  * };
  */
 class Solution {
-private:
-    void reverse(ListNode* head){
-        ListNode* curr=head;
-        ListNode* prev=NULL;
-        ListNode* next=NULL;
-
-        while(curr!=NULL){
-            next=curr->next;
-            curr->next=prev;
-            prev=curr;
-            curr=next;
-        }
-    }
-
-    void insertAtTail(ListNode* &head, ListNode* &tail,int value){
-        ListNode* temp= new ListNode(value);
-        if(head==NULL){
-            head=temp;
-            tail=temp;
-            return;
-        }
-        else{
-            tail->next=temp;
-            tail=temp;
-        }
-    }
-
-    ListNode* add(ListNode* l1, ListNode* l2){
+public:
+    // ListNode* reverse(ListNode* head){
+    //     ListNode* temp=head;
+    //     ListNode* prev=nullptr;
+    //     ListNode* next=nullptr;
+    //     while(temp!=nullptr){
+    //         next=temp->next;
+    //         temp->next=prev;
+    //         prev=temp; temp=next;
+    //     }
+    //     return prev;
+    // }
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        ListNode* dummy=new ListNode(-1);
+        ListNode* curr=dummy;
+        // ListNode* h1=reverse(l1);
+        // ListNode* h2=reverse(l2);
         int carry=0;
-        ListNode* ansHead=NULL;
-        ListNode* ansTail=NULL;
-
-        while(l1!=NULL || l2!=NULL || carry!=0){
-            int val1=0; int val2=0;
-            if(l1!=NULL)
-                val1=l1->val;
-            if(l2!=NULL)
-                val2=l2->val;
-
-            int sum=carry+val1+val2;
-            int digit=sum%10;
-
-            insertAtTail(ansHead,ansTail,digit);
-
-            carry=sum/10;
-            if(l1!=NULL){
+        while(l1!=nullptr || l2!=nullptr || carry!=0){
+            int sum=0;
+            if(l1!=nullptr) {
+                sum+=l1->val;
                 l1=l1->next;
             }
-            if(l2!=NULL){
+            if(l2!=nullptr) {
+                sum+=l2->val;
                 l2=l2->next;
             }
+            sum+=carry;
+            carry=(sum)/10;
+            curr->next=new ListNode(sum%10);
+            curr=curr->next;
         }
-        return ansHead;
-    }
-public:
-    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        ListNode* ans=add(l1,l2);
-        return ans;
-
+        return dummy->next;
     }
 };

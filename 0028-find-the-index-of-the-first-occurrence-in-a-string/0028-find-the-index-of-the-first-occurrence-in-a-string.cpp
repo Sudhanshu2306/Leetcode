@@ -1,20 +1,11 @@
 class Solution {
 public:
-    int strStr(string haystack, string needle) {
-        int n=haystack.size();
-        int m=needle.size();
-        int index=0;
-        for(int i=0;i<n;i++){
-            if(haystack.at(i)==needle.at(index)){
-                index++;
-            }
-            else{
-                i=i-index;
-                index=0;
-            }
-            if(index==m){
-                return i-m+1;
-            }
+    int strStr(string h, string n) {
+        int x=h.size();
+        int y=n.size();
+        // int index=0;
+        for(int i=0;i<=x-y;i++){
+            if(h.find(n)!=string::npos) return h.find(n);
         }
         return -1;
     }

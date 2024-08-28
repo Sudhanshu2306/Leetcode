@@ -31,6 +31,7 @@ class DisjointSet{
 
 class Solution {
 public:
+    /*
     int countSubIslands(vector<vector<int>>& grid1, vector<vector<int>>& grid2) {
         int r=grid1.size(), c=grid1[0].size();
         DisjointSet dsu(r*c+1); 
@@ -50,5 +51,35 @@ public:
             }
         }
         return island-dsu.count;
+    }
+    */
+    int dx[4]={-1,0,1,0};
+    int dy[4]={0,1,0,-1};
+    bool dfs(int r, int c, vector<vector<int>> &grid1, vector<vector<int>> &grid2, vector<vector<int>> &vis){
+        int n=grid2.size(); int m=grid2[0].size();
+        if(!(r>=0 && c>=0 && r<n && c<m && grid2[r][c]==1 && vis[r][c]==0)) return true;
+        vis[r][c]=1;
+        int x=true;
+        if(grid1[r][c]==0) x=false;
+        for(int i=0;i<4;i++){
+            int nr=r+dx[i]; int nc=c+dy[i];
+            x&=dfs(nr,nc,grid1,grid2,vis);
+        }
+        return x;
+
+    }
+
+    int countSubIslands(vector<vector<int>>& grid1, vector<vector<int>>& grid2) {
+        int n=grid1.size(); int m=grid1[0].size();
+        int count=0;
+        vector<vector<int>> vis(n,vector<int>(m,0));
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(grid2[i][j]==1 && vis[i][j]==0){
+                    if(dfs(i,j,grid1,grid2,vis)) count++;
+                }
+            }
+        }
+        return count;
     }
 };

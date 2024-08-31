@@ -8,7 +8,7 @@ public:
             adj[i[1]].push_back({i[0],p[j]});
             j++;
         }
-        priority_queue<pair<double,int>, vector<pair<double,int>>> pq;
+        priority_queue<pair<double,int>, vector<pair<double,int>>> pq; //max_heap
         vector<double> dist(n,-1);
         dist[s]=1.0;
         pq.push({1.0,s});

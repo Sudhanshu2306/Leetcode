@@ -1,20 +1,17 @@
-using ll=long long;
 class Solution {
 public:
     long long findMaximumScore(vector<int>& nums) {
-        ll n=nums.size();
-        ll s=0; 
-        // ll e=1;
-        ll ans=0;
-        while(s<n-1){
-            ll e=s+1;
-            while(e<n && nums[e]<=nums[s]) e++;
-            if(e>=n) e=n-1;
+        int n=nums.size();
+        long long ans=0;
+        long long i=0;
 
-            ans+=nums[s]*(e-s);
-            s=e;
-            // e=s+1;
-            // cout<<ans<<" ";
+        while(i<n-1){
+            long long j=i+1;
+            while(j<n && nums[j]<=nums[i]) j++;
+            if(j>=n) j=n-1;
+
+            ans+=(j-i)*(long long)nums[i];
+            i=j;
         }
         return ans;
     }

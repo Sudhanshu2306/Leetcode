@@ -5,15 +5,14 @@ int fOcc(vector<int>nums,int target){
     int mid=(s+e)/2;
     int ans=-1;
     while(s<=e){
-        
-        if(nums.at(mid)==target){
+        if(nums[mid]==target){
             ans=mid;
             e=mid-1;
         }
-        if(target>nums.at(mid)){
+        if(target>nums[mid]){
             s=mid+1;
         }
-        else if(target<nums.at(mid)){
+        else if(target<nums[mid]){
             e=mid-1;
         }
         mid=(s+e)/2;
@@ -26,12 +25,11 @@ int lOcc(vector<int>nums,int target){
     int mid=(s+e)/2;
     int ans=-1;
     while(s<=e){
-        
-        if(nums.at(mid)==target){
+        if(nums[mid]==target){
             ans=mid;
             s=mid+1;
         }
-        if(nums.at(mid)>target){
+        if(nums[mid]>target){
             e=mid-1;
         }
         else{
@@ -44,12 +42,13 @@ int lOcc(vector<int>nums,int target){
 
 public:
     vector<int> searchRange(vector<int>& nums, int target) {
-        vector<int> ans;
-        int x=fOcc(nums,target);
-        int y=lOcc(nums,target);
-        ans.push_back(x);
-        ans.push_back(y);
-        
-        return ans;
+        // vector<int> ans;
+        int n=nums.size();
+        int x=lower_bound(nums.begin(),nums.end(),target)-nums.begin();
+        if(x>n-1 || nums[x]>target) return {-1,-1};
+        int y=upper_bound(nums.begin(),nums.end(),target)-nums.begin();
+        if(!(y-1>=0 && nums[y-1]==target)) y=-1;
+        return {x,y-1};
+       
     }
 };

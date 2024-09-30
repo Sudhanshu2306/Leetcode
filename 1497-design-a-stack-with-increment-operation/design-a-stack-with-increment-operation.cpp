@@ -7,9 +7,8 @@ public:
     }
     
     void push(int x) {
-        if(arr.size()<s){
-            arr.push_back(x);
-        }
+        if(arr.size()<s) arr.push_back(x);
+        
     }
     
     int pop() {
@@ -22,9 +21,8 @@ public:
     }
     
     void increment(int k, int val) {
-        for(int i=0;i<k && i<arr.size();i++){
-            arr[i]+=val;
-        }
+        for(int i=0;i<k && i<arr.size();i++) arr[i]+=val;
+        
     }
 };
 

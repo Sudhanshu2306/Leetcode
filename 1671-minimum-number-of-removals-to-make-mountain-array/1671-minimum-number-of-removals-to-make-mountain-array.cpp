@@ -1,5 +1,6 @@
 class Solution {
 public:
+    // think of longest bitonic subsequence and subtract the max len from total size
     int minimumMountainRemovals(vector<int>& nums) {
         int n=nums.size();
         vector<int> dp(n,1);

@@ -13,7 +13,7 @@ public:
         int ans=0;
         
         while(s<=e){
-            int mid=s+(e-s)/2;
+            int mid=s+(e-s)/2; // mid is the maximum size of bag
             if(ff(nums,maxOperations,mid)){
                 ans=mid; e=mid-1;
             } 

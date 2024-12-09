@@ -1,29 +1,28 @@
 class Solution {
 public:
     vector<bool> isArraySpecial(vector<int>& nums, vector<vector<int>>& queries) {
-        int n=queries.size();
+        int m=queries.size();
+        vector<bool> ans(m);
+        int n=nums.size();
+
+        vector<int> pre(n);
         int i=0;
-        vector<int> temp(nums.size(), 0);
-        
-        for (int i = 1; i < nums.size(); i++) {
-            temp[i] = temp[i - 1];
-            if ((nums[i - 1] % 2) == (nums[i] % 2)) {
-                temp[i]++;
+        bool prev=(nums[0]%2!=0);
+        for(int j=0;j<n;j++){
+            if(nums[j]%2 != prev){
+                prev=!prev;
+            }
+            else{
+                for(int k=i;k<j;k++) pre[k]=j-1;
+                i=j;
             }
         }
-        vector<bool> ans(n);
-        for (int i = 0; i < n; i++) {
-            int x = queries[i][0];
-            int y = queries[i][1];
-            // bool flag = true;
-            
-            if (temp[y] - temp[x] > 0) {
-                ans[i] = false;
-            } 
-            else {
-                ans[i] = true;
-            }
-            // ans[i] = flag;
+        for(int k=i;k<n;k++) pre[k]=(n-1);
+
+        for(int i=0;i<m;i++){
+            int l=queries[i][0];
+            int r=queries[i][1];
+            ans[i]=(pre[l]>=r);
         }
         return ans;
     }

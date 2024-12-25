@@ -11,25 +11,22 @@
  */
 class Solution {
 public:
-    
-    vector<vector<int>> ans;
-
-    void buildVector(TreeNode *root, int depth){
-        if(root == NULL) return;
-        if(ans.size() == depth)
-            ans.push_back(vector<int>());
-
-        ans[depth].push_back(root->val);
-        buildVector(root->left, depth + 1);
-        buildVector(root->right, depth + 1);
-    }
     vector<int> largestValues(TreeNode* root) {
-        buildVector(root,0);
-        vector<int> answer;
-        for(auto i:ans){
-            sort(i.begin(),i.end());
-            answer.push_back(i.back());
+        vector<int> ans;
+        if(root==nullptr) return ans;
+        queue<TreeNode*> q;
+        q.push(root);
+        while(!q.empty()){
+            int n=q.size();
+            int maxi=INT_MIN;
+            for(int i=0;i<n;i++){
+                auto x=q.front(); q.pop();
+                maxi=max(maxi,x->val);
+                if(x->left) q.push(x->left);
+                if(x->right) q.push(x->right);
+            }
+            ans.push_back(maxi);
         }
-        return answer;
+        return ans;
     }
 };

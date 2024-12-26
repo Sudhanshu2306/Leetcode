@@ -4,18 +4,16 @@ public:
     // top down approach
     int solve(int ind, int target, vector<int>& nums, vector<vector<int>> &dp){
     
-        if(ind==0){
-            if(target==0 && nums[0]==0) return 2;
-            if(target==nums[0] || target==0) return 1;
+        if(ind>=nums.size()){
+            if(target==0) return 1;
             return 0;
         }
         
-        if(dp[ind][target] != -1) return dp[ind][target];
-        int notpick=solve(ind-1,target,nums,dp);
-        int pick=0;
-        if(target>=nums[ind]) pick=solve(ind-1,target-nums[ind],nums,dp);
+        if(dp[ind][target+1000] != -1) return dp[ind][target+1000];
+        int neg=solve(ind+1,target-nums[ind],nums,dp);
+        int pos=solve(ind+1,target+nums[ind],nums,dp);
         
-        return dp[ind][target] = pick+notpick;
+        return dp[ind][target+1000] = neg+pos;
         
     }
     
@@ -31,9 +29,9 @@ public:
         if(sum%2) return 0;
         else sum/=2;
         
-        vector<vector<int>> dp(n,vector<int>(sum+1,-1));
+        vector<vector<int>> dp(n,vector<int>(3000+1,-1));
         
-        return solve(n-1, sum, nums,dp);
+        return solve(0, target, nums ,dp);
         
         
     }

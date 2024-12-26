@@ -1,6 +1,7 @@
 class Solution {
 public:
-    
+    // this question is same as finding number of subsets with given difference k
+    // top down approach
     int solve(int ind, int target, vector<int>& nums, vector<vector<int>> &dp){
     
         if(ind==0){
@@ -19,7 +20,7 @@ public:
     }
     
     int findTargetSumWays(vector<int>& nums, int target) {
-        // subset1 + subset2 = totalSum of vector elements
+        // subset1 + subset2 = totalSum of vector elements 
         // and between subset1 - subset2 is given as target
         // so now if we calculate subset1 sum using simple linear equation
         
@@ -33,6 +34,7 @@ public:
         vector<vector<int>> dp(n,vector<int>(sum+1,-1));
         
         return solve(n-1, sum, nums,dp);
+        
         
     }
 };

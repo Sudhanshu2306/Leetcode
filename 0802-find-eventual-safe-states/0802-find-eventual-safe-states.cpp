@@ -1,46 +1,37 @@
 class Solution {
 public:
-
-    bool dfs(int i,vector<vector<int>> &adj,vector<int> &vis,vector<int> &visPath,vector<int> &dp){
-        if(dp[i] == 1){
-            return false;
-        }
-        vis[i] = 1;
-        visPath[i] = 1;
-        dp[i] = 0;
-        for(auto it : adj[i]){
-            if(!vis[it]){
-                if(dfs(it,adj,vis,visPath,dp)){
-                    dp[i] = 0;
-                    return true;
-                }
-            }
-            else if(visPath[it]){
-                dp[i] = 0;
-                return true;
-            }
-        }
-        visPath[i] = 0;
-        dp[i] = 1;
-        return false;
-    }
-
     vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
-        int n = graph.size();
-        vector<int>dp(n);
-        vector<int>vis(n);
-        vector<int>visPath(n);
-        for(int i = 0;i < n;i++){
-            if(vis[i] == 0){
-                dfs(i,graph,vis,visPath,dp);
+        int n=graph.size();
+        vector<vector<int>> adj(n);
+        for(int i=0;i<n;i++){
+            for(auto it:graph[i]){
+                adj[it].push_back(i);
             }
         }
-        vector<int>ans;
-        for(int i = 0;i < n;i++){
-            if(dp[i] == 1){
-                ans.push_back(i);
+
+        vector<int> in(n);
+        for(int i=0;i<n;i++){
+            for(auto it:graph[i]){
+                in[i]++;
             }
         }
-        return ans;
+        queue<int> q;
+        vector<int> topo;
+        for(int i=0;i<n;i++){
+            if(in[i]==0) q.push(i);
+        }
+
+        while(!q.empty()){
+            int x=q.front(); q.pop();
+            topo.push_back(x);
+
+            for(auto it:adj[x]){
+                in[it]--;
+                if(in[it]==0) q.push(it);
+            }
+        }
+        sort(topo.begin(),topo.end());
+        return topo;
+
     }
 };

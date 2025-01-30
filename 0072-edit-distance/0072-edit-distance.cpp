@@ -7,17 +7,17 @@ public:
         if(j<0) return (i+1);
         
         if(dp[i][j]!=-1) return dp[i][j];
-        // insert
+
         if(s[i]==t[j]) return solve(i-1,j-1,s,t,dp); 
         else {
+            // insert
             int x = solve(i,j-1,s,t,dp)+1;
             // delete
             int y = solve(i-1,j,s,t,dp)+1;
             // replace
             int z=solve(i-1,j-1,s,t,dp)+1;
-            // computing mininum of all three
 
-            return dp[i][j]=min(x,min(y,z));
+            return dp[i][j]=min({x,y,z});
         }
     }
     

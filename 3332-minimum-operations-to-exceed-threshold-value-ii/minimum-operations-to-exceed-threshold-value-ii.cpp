@@ -13,7 +13,6 @@ public:
             ll z=2*min(x,y)+max(x,y);
             pq.push(z);
             count++;
-             
         }
         return count;
     }

@@ -13,21 +13,25 @@ class Solution {
 public:
     int camera=0;
     int f(TreeNode* root){
-        if(root==nullptr) return 1;
+        if(root==nullptr) return 2;
 
         int lc=f(root->left);
         int rc=f(root->right);
 
-        if(lc==-1 || rc==-1) {
+        if(lc==1 || rc==1){
             camera++;
             return 0;
         }
-        if(lc==0 || rc==0) return 1;
-        return -1;
+
+        if(lc==0 || rc==0) return 2;
+        return 1;
     }
     int minCameraCover(TreeNode* root) {
-        f(root);
-        if(root->right==nullptr && root->left==nullptr) camera++;
+        // I need a camera : 1
+        // I am covered : 2
+        // I am the camera : 0
+        // f(root);
+        if(f(root)==1) camera++;
         return camera;
     }
 };

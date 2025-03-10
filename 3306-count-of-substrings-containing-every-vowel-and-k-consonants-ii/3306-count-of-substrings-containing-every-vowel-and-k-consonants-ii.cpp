@@ -9,7 +9,7 @@ public:
         for(auto i:vowels) x+=i.second;
         return x;
     }
-    int ss(string s, int k){
+    long long ss(string s, int k){
         unordered_map<char,long long> vowels;
         int n=s.size();
         long long cons=0;
@@ -26,12 +26,13 @@ public:
                 if(vowels[s[i]]==0) vowels.erase(s[i]);
                 i++;
             }
+            
             j++;
         }
         return ans;
     }
     long long countOfSubstrings(string word, int k) {
-        int x1=ss(word,k+1); int x2=ss(word,k);
+        long long x1=ss(word,k+1); long long x2=ss(word,k);
         return (x2-x1);
 
     }

@@ -4,11 +4,7 @@ public:
         if(ch=='a' || ch=='e' || ch=='i' || ch=='o' || ch=='u') return true;
         return false;
     }
-    int f(unordered_map<char,int> vowels){
-        int x=0;
-        for(auto i:vowels) x+=i.second;
-        return x;
-    }
+    
     long long ss(string s, int k){
         unordered_map<char,long long> vowels;
         int n=s.size();
@@ -26,7 +22,6 @@ public:
                 if(vowels[s[i]]==0) vowels.erase(s[i]);
                 i++;
             }
-            
             j++;
         }
         return ans;

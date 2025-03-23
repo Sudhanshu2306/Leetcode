@@ -1,41 +1,39 @@
+typedef long long ll;
 class Solution {
 public:
+    ll mod=1e9+7;
     int countPaths(int n, vector<vector<int>>& roads) {
-        priority_queue<pair<long long,long long>, vector<pair<long long,long long>>, greater<pair<long long,long long>>> pq;
-        vector<pair<long long,long long>> adj[n];
-        for(auto i:roads){
-            adj[i[0]].push_back({i[1],i[2]});
-            adj[i[1]].push_back({i[0],i[2]});
+        vector<vector<pair<ll,ll>>> adj(n);
+        for(auto it:roads){
+            int u=it[0],v=it[1],w=it[2];
+            adj[u].push_back({v,w});
+            adj[v].push_back({u,w});
         }
-
-        const long long mod=1e9+7;
-        vector<long long> dist(n,LONG_MAX), ways(n,0);
-        dist[0]=0;
-        ways[0]=1;
-        // {dist,node}
+        priority_queue<pair<ll,ll>,vector<pair<ll,ll>>, greater<pair<ll,ll>>> pq;
         pq.push({0,0});
+        vector<ll> dist(n,1e18);
+        vector<ll> dp(n,0);
 
+        dp[0]=1; dist[0]=0;
         while(!pq.empty()){
-            auto x=pq.top(); pq.pop();
-            long long d=x.first;
-            long long node=x.second;
+            auto temp=pq.top(); pq.pop();
+            ll d=temp.first, node=temp.second;
 
-            if(dist[node]<d) continue;
-            for(auto i:adj[node]){
-                long long adjNode=i.first;
-                long long edw=i.second;
+            if(d>dist[node]) continue;
 
-                if(d+edw<dist[adjNode]){
-                    dist[adjNode]=edw+d;
-                    ways[adjNode]=ways[node];
-                    pq.push({edw+d,adjNode});
+            for(auto it:adj[node]){
+                ll adjnode=it.first, w=it.second;
+
+                if(d+w<dist[adjnode]){
+                    pq.push({d+w,adjnode});
+                    dist[adjnode]=d+w;
+                    dp[adjnode]=dp[node]%mod;
                 }
-                else if(d+edw==dist[adjNode]) {
-                    ways[adjNode]=(ways[adjNode]+ways[node])%mod;
+                else if(d+w==dist[adjnode]){
+                    dp[adjnode]=(dp[node]+dp[adjnode])%mod;
                 }
             }
         }
-        return ways[n-1]%mod;
-
+        return dp[n-1]%mod;
     }
 };

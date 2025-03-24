@@ -1,26 +1,20 @@
 class Solution {
 public:
-    int countDays(int days, vector<vector<int>>& m) {
-        vector<pair<int,int>> a;
-        
-        int count=0;
-        for(int i=0;i<m.size();i++){
-            a.emplace_back(m[i][1]+1,-1);
-            a.emplace_back(m[i][0],1);
-        }
-        
+    int countDays(int days, vector<vector<int>>& a) {
         sort(a.begin(),a.end());
-        
-        int curr=0,prev=1;
-        
-        for(int i=0;i<a.size();i++){
-            int x=a[i].first, y=a[i].second;
-            
-            if(curr==0) count+=(x-prev);
-            prev=x;
-            curr+=y;
+        // for(auto it:a) cout<<it[0]<<" "<<it[1]<<endl;
+        int count=a[0][0]-1;
+        int e=a[0][1];
+        for(int i=1;i<a.size();i++){
+            if(a[i][0]<=e) e=max(e,a[i][1]);
+            else{
+                count+=(a[i][0]-e-1);
+                e=max(e,a[i][1]);
+            }
+            cout<<e<<" ";
         }
-        if(curr==0) count+=(days-prev+1);
+        count+=(days-e);
         return count;
+        // return 0;
     }
 };

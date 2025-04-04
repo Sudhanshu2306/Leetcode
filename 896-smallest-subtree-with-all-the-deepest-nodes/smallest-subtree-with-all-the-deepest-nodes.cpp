@@ -9,25 +9,25 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+ typedef long long ll;
 class Solution {
 public:
-    int maxi=INT_MIN;
-    TreeNode* res=nullptr;
-    int f(TreeNode* root, int depth){
-        if(root==nullptr) return depth;
-        int left=f(root->left,depth+1);
-        int right=f(root->right,depth+1);
+    ll x=-1e18;
+    TreeNode* ans;
+    ll ff(TreeNode* root, ll d){
+        if(root==nullptr) return d;
+        ll left=ff(root->left,d+1);
+        ll right=ff(root->right,d+1);
+
         if(left==right){
-            maxi=max(maxi,left);
-            if(maxi==left){
-                res=root;
-            }
+            x=max(x,left);
+            if(x==left) ans=root;
         }
+
         return max(left,right);
     }
-
     TreeNode* subtreeWithAllDeepest(TreeNode* root) {
-        f(root,0);
-        return res;
+        ff(root,0);
+        return ans;
     }
 };

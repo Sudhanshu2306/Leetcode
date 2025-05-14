@@ -41,7 +41,7 @@ public:
             if(fq[i]==0) continue;
             for(int j=0;j<26;j++) fc[j]=(fc[j]+fq[i]*Mt[i][j])%mod;
         }
-        for(int i=0;i<26;i++) tot = (tot + fc[i]) % mod;
+        for(int i=0;i<26;i++) tot=(tot+fc[i]) % mod;
         return static_cast<int>(tot);
     }
 };

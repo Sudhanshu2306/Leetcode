@@ -14,7 +14,7 @@ public:
     int widthOfBinaryTree(TreeNode* root) {
         if(root==nullptr) return 0;
         int ans=0;
-        queue<pair<TreeNode*,int>> q;
+        queue<pair<TreeNode*,long long>> q;
         q.push({root,0});
         
         while(!q.empty()){
@@ -23,7 +23,7 @@ public:
             int first=0,last=0;
 
             for(int i=0;i<n;i++){
-                int id=q.front().second-m;
+                int id=q.front().second;
                 TreeNode* node=q.front().first;
                 q.pop();
                 if(i==0) first=id;

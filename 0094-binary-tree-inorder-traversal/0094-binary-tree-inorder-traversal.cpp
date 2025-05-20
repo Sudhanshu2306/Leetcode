@@ -23,7 +23,29 @@ public:
     
     vector<int> inorderTraversal(TreeNode* root) {
         vector<int> ans;
-        inorder(root,ans);
+        // inorder(root,ans);
+        TreeNode* curr=root;
+        while(curr!=nullptr){
+            if(curr->left==nullptr){
+                ans.push_back(curr->val);
+                curr=curr->right;
+            }
+            else{
+                TreeNode* p=curr->left;
+                while(p->right!=nullptr && p->right!=curr){
+                    p=p->right;
+                }
+                if(p->right==nullptr){
+                    p->right=curr;
+                    curr=curr->left;
+                }
+                else{
+                    p->right=nullptr;
+                    ans.push_back(curr->val);
+                    curr=curr->right;
+                }
+            }
+        }
         return ans;
     }
 };

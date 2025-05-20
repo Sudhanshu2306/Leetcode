@@ -12,9 +12,7 @@
 class Solution {
 public:
     unordered_map<TreeNode*, TreeNode*> mp;
-    
-    // creates mapping
-    // finds target
+
     TreeNode* mapping( TreeNode* root, int target){
         TreeNode* res=nullptr;
         mp[root]=nullptr;
@@ -25,18 +23,13 @@ public:
             TreeNode* front=q.front();
             q.pop();
             
-            if(front->val==target)
-            {
-                res=front;
-            }
+            if(front->val==target) res=front;
             
-            if(front->left)
-            {
+            if(front->left){
                 mp[front->left]=front;
                 q.push(front->left);
             }
-            if(front->right)
-            {
+            if(front->right){
                 mp[front->right]=front;
                 q.push(front->right);
             }

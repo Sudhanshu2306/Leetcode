@@ -1,56 +1,48 @@
-class TrieNode{
+class Node{
     public:
-    TrieNode* links[2];
+    vector<Node*> links;
 
+    Node(){
+        links.resize(2);
+        links[0]=links[1]=nullptr;
+    }   
 };
-
 class Trie{
-    private:
-    TrieNode* root;
-    public: 
-        Trie(){
-            root=new TrieNode();
-        }
     public:
-    // insert the number into trie in form of bits
-        void insert(int num){
-            TrieNode* node=root;
-            for(int i=31;i>=0;i--){
-                int bit=(num>>i)&1; // either 0 or 1
-                if(node->links[bit]==nullptr) {
-                    node->links[bit]=new TrieNode();
-                }
-                node=node->links[bit];
-            }
-        }
+    Node* root;
+    Trie(){
+        root=new Node();
+    }
 
-        int getMax(int num){
-            TrieNode* node=root;
-            int maxi=0;
-            for(int i=31;i>=0;i--){
-                int bit=(num>>i) & 1;
-                if(node->links[1-bit]!=nullptr){
-                    maxi= maxi | (1<<i);
-                    node=node->links[1-bit];
-                }
-                else{
-                    node=node->links[bit];
-                }
-            }
-            return maxi;
+    void insert(int x){
+        Node* curr=root;
+        for(int i=31;i>=0;i--){
+            int bit=(x>>i)&1;
+            if(curr->links[bit]==nullptr) curr->links[bit]=new Node();
+            curr=curr->links[bit];
         }
+    }
+    int f(int x){
+        Node* curr=root;
+        int maxi=0;
+        for(int i=31;i>=0;i--){
+            int bit=(x>>i)&1;
+            if(curr->links[1-bit]==nullptr) curr=curr->links[bit];
+            else{
+                maxi=maxi|(1<<i);
+                curr=curr->links[1-bit];
+            }
+        }
+        return maxi;
+    }
 };
 class Solution {
 public:
     int findMaximumXOR(vector<int>& nums) {
-        Trie trie;
-        for(int i=0;i<nums.size();i++){
-            trie.insert(nums[i]);
-        }
+        Trie t;
+        for(auto it:nums) t.insert(it);
         int maxi=0;
-        for(int i=0;i<nums.size();i++){
-            maxi=max(maxi,trie.getMax(nums[i]));
-        }
+        for(auto it:nums) maxi=max(maxi,t.f(it));
         return maxi;
     }
 };

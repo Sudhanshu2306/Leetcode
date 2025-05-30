@@ -10,7 +10,7 @@ public:
             adj[v].push_back({u,w});
         }
         priority_queue<pair<ll,ll>,vector<pair<ll,ll>>, greater<pair<ll,ll>>> pq;
-        pq.push({0,0});
+        pq.push({0,0}); // {dist,node}
         vector<ll> dist(n,1e18);
         vector<ll> dp(n,0);
 

@@ -1,36 +1,28 @@
 class Solution {
 public:
     int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int k) {
-        queue<pair<int,pair<int,int>>> q;
-        // int n=flights.size();
-        vector<pair<int,int>> adj[n];
-
-        for(auto i:flights){
-            adj[i[0]].push_back({i[1],i[2]});
+        vector<vector<pair<int,int>>> adj(n);
+        for(auto it:flights){
+            adj[it[0]].push_back({it[1],it[2]});
         }
-        // {stops,{node,dist}};
-        q.push({0,{src,0}});
 
-        vector<int> c(n,1e9);
-        c[src]=0;
+        vector<int> dist(n,INT_MAX);
+        dist[src]=0;
+        queue<tuple<int,int,int>> q;
+        q.push({0,src,0});
+
         while(!q.empty()){
-            auto i=q.front(); q.pop();
-            int stops=i.first;
-            int node=i.second.first;
-            int dist=i.second.second;
+            auto [stops,node,d]=q.front(); q.pop();
+
             if(stops>k) continue;
 
-            for(auto itr:adj[node]){
-                int adjNode=itr.first;
-                int d=itr.second;
-
-                if(dist+d<c[adjNode] && stops<=k){
-                    c[adjNode]=dist+d;
-                    q.push({stops+1,{adjNode,c[adjNode]}});
+            for(auto it:adj[node]){
+                if(d+it.second<dist[it.first]){
+                    dist[it.first]=d+it.second;
+                    q.push({stops+1,it.first,dist[it.first]});
                 }
             }
         }
-        if(c[dst]==1e9) return -1;
-        return c[dst];
+        return dist[dst]==INT_MAX?-1:dist[dst];
     }
 };

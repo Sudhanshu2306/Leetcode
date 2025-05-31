@@ -3,38 +3,41 @@ public:
     int snakesAndLadders(vector<vector<int>>& board) {
         int n=board.size();
         vector<int> arr;
-        bool f=1;
-        int ind;
+        bool flag=true;
+
         for(int i=n-1;i>=0;i--){
             for(int j=0;j<n;j++){
-                if(f) ind=j;
-                else ind=n-1-j;
-                arr.push_back(board[i][ind]);
+                int x;
+                if(flag) x=j;
+                else x=n-j-1;
+                arr.push_back(board[i][x]);
             }
-            f=!f;
+            flag=!flag;
         }
+
+        queue<int> q;
+        q.push(0);
         vector<int> vis(n*n,0);
-        queue<pair<int,int>> q; 
-        // {ind,moves}
-        q.push({0,0});
+        int moves=0;
         while(!q.empty()){
-            auto x=q.front(); q.pop();
-            int ind=x.first; int moves=x.second;
+            int m=q.size();
+            for(int i=0;i<m;i++){
+                auto ind=q.front(); q.pop();
+                if(ind==n*n-1) return moves;
 
-            if(ind==n*n-1) return moves;
-
-            for(int i=1;i<=6;i++){
-                if(ind+i<n*n){
-                    int next=ind+i;
+                for(int k=1;k<=6;k++){
+                    int next=ind+k;
+                    if(next>= n*n) break;
                     if(arr[next]!=-1){
                         next=arr[next]-1;
                     }
                     if(vis[next]==0){
-                        q.push({next,moves+1});
                         vis[next]=1;
+                        q.push(next);
                     }
                 }
             }
+            moves++;
         }
         return -1;
     }

@@ -1,24 +1,22 @@
 class Solution {
 public:
-    int f(int i, int t, vector<int>& prices, int buy, vector<vector<vector<int>>> &dp){
-        if(i>=prices.size() || t==0) return 0;
+    int f(vector<int> &a, int i, int buy, int t, vector<vector<vector<int>>> &dp){
+        // base case
+        if(t==0 || i==a.size()) return 0;
 
         if(dp[i][buy][t]!=-1) return dp[i][buy][t];
 
-        int profit;
-        if(buy==1){
-            profit=max(f(i+1,t,prices,0,dp)-prices[i],f(i+1,t,prices,1,dp));
-        }
-        else{
-            profit=max(f(i+1,t-1,prices,1,dp)+prices[i],f(i+1,t,prices,0,dp));
-        }
+        int profit=0;
+        if(buy==1) profit=max(f(a,i+1,0,t,dp)-a[i],f(a,i+1,1,t,dp));
+        else profit=max(f(a,i+1,1,t-1,dp)+a[i],f(a,i+1,0,t,dp));
+
         return dp[i][buy][t]=profit;
     }
     
     int maxProfit(vector<int>& prices) {
         int n=prices.size();
         vector<vector<vector<int>>> dp(n+1,vector<vector<int>>(2,vector<int>(3,-1)));
-        return f(0,2,prices,1,dp);
+        return f(prices,0,1,2,dp);
         
         // base case
         // we could have omitted base case, as all values are zero, but this is just for sense of understanding that how we write base case

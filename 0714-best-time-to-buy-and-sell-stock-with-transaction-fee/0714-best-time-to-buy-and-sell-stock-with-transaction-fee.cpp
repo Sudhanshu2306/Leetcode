@@ -22,10 +22,7 @@ public:
         nextBuy = nextNotBuy = 0;
         for(int ind=n-1;ind>=0;ind--){
             todayBuy = max(-prices[ind] + nextNotBuy, nextBuy);
-            
             todayNotBuy = max(prices[ind] + nextBuy-fee, nextNotBuy);
-            
-                
             nextBuy=todayBuy;
             nextNotBuy = todayNotBuy;
         }

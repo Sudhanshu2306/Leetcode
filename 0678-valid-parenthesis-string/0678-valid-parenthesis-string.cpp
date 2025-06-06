@@ -1,59 +1,38 @@
 class Solution {
 public:
+    bool f(string s, int i, int count, vector<vector<int>> &dp){
+        if(count<0) return false;
+        if(i==s.size()) return count==0;
+
+        if(dp[i][count]!=-1) return dp[i][count];
+
+        if(s[i]=='(') return f(s,i+1,count+1,dp);
+        if(s[i]==')') return f(s,i+1,count-1,dp);
+
+        return dp[i][count]=f(s,i+1,count+1,dp) | f(s,i+1,count-1,dp) | f(s,i+1,count,dp);
+    }
+    // bool checkValidString(string s) {
+    //     int mini=0; int maxi=0;
+    //     for(int i=0;i<s.size();i++){
+    //         if(s[i]=='('){
+    //             mini++; maxi++;
+    //         }
+    //         else if(s[i]==')'){
+    //             mini--; maxi--;
+    //         }
+    //         else{
+    //             mini--; maxi++;
+    //         }
+    //         mini=max(mini,0);
+    //         if(maxi<0) return false;
+    //     }
+    //     if(mini==0) return true;
+    //     return false;
+    // }
+
     bool checkValidString(string s) {
-        // 2 loop kar lo, ek baar * ko '(' aur ek baar ')' maan ke
-
-        stack<char> st;
         int n=s.size();
-        // * = "("
-        bool flag=true;
-        for(int i=0;i<n;i++){
-            if(s[i]=='(' || s[i]=='*'){
-                st.push(s[i]);
-            }
-            else{
-                if(!st.empty()) st.pop();
-                else{
-                    flag=false;
-                    break;
-                } 
-            }
-        }
-        
-        if(!st.empty()) flag=false;
-        
-        bool flag1=true;
-        stack<char> st1;
-        for(int i=0;i<n;i++){
-            if(s[i]=='('){
-                st1.push(s[i]);
-            }
-            else{
-                if(!st1.empty()) st1.pop();
-                else{
-                    flag1=false;
-                    break;
-                } 
-            }
-        }
-        if(!st1.empty()) flag1=false;
-
-        bool flag2=true;
-        stack<char> st2;
-        for(int i=0;i<n;i++){
-            if(s[i]=='('){
-                st2.push(s[i]);
-            }
-            else if(s[i]==')'){
-                if(!st2.empty()) st2.pop();
-                else{
-                    flag2=false;
-                    break;
-                } 
-            }
-        }
-        if(!st2.empty()) flag2=false;
-
-        return flag||flag1||flag2;
+        vector<vector<int>> dp(n+1,vector<int>(n+1,-1));
+        return f(s,0,0,dp);
     }
 };

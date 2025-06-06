@@ -4,7 +4,7 @@ public:
         int f=0,t=0;
         int n=bills.size();
         for(int i=0;i<n;i++){
-            if(bills[i]==5)f++;
+            if(bills[i]==5) f++;
             else if(bills[i]==10){
                 if(f>0) f-=1;
                 else return false;
@@ -14,7 +14,7 @@ public:
                 if(t>=1 && f>=1){
                     t-=1; f-=1;
                 }
-                else if(t<1 && f>=3){
+                else if(f>=3){
                     f-=3;
                 }
                 else return false;

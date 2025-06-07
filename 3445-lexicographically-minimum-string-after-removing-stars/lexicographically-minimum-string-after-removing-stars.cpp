@@ -1,31 +1,31 @@
 class Solution {
 public:
     string clearStars(string s) {
-        stack<char> st;
+        int n=s.size();
         string ans="";
 
-        for(int i=0;i<s.size();i++){
-            if(s[i]!='*'){
-                ans.push_back(s[i]);
+        auto comp=[](pair<char,int> &a, pair<char,int> &b){
+            if(a.first==b.first) return a.second<b.second;
+            return a.first>b.first;
+        };
+
+        priority_queue<pair<char,int>, vector<pair<char,int>>, decltype(comp)> pq(comp);
+        for(int i=0;i<n;i++){
+            if(s[i]=='*'){
+                if(!pq.empty()) pq.pop();
             }
             else{
-                int ind=-1;
-                char ch='z'+1;
-                for(int j=ans.size()-1;j>=0;j--){
-                    if(ans[j]<ch) {
-                        ch=ans[j];
-                        ind=j;
-                    }
-                    // else if(ans[j]>ch) break;
-                }
-                
-                if(ind!=-1){
-                    ans.erase(ans.begin()+ind);
-                }
-            } 
-            
+                pq.push({s[i],i});
+            }
         }
-        // reverse(ans.begin(),ans.end());
+        vector<pair<int,char>> a;
+        while(!pq.empty()){
+            a.push_back({pq.top().second,pq.top().first});
+            pq.pop();
+        }
+        sort(a.begin(),a.end());
+        for(auto it:a) ans+=it.second;
+
         return ans;
     }
 };

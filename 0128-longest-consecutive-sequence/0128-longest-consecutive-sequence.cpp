@@ -12,7 +12,7 @@ public:
                 count=1;
                 while(st.find(x+1)!=st.end()){
                     count++;
-                    x=x+1;
+                    x++;
                 }
             }
             maxi=max(maxi,count);

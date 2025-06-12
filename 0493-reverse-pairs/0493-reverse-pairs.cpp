@@ -26,7 +26,7 @@ public:
             right++;
         }
 
-        // transfering all elements from temporary to arr //
+        // transfering all elements from temporary to arr, low and high are 0 and n-1
         for (int i = low; i <= high; i++) {
             arr[i] = temp[i - low];
         }
@@ -36,7 +36,7 @@ public:
         int right = mid + 1;
         int count = 0;
         for (int i = low; i <= mid; i++) {
-            while (right <= high && arr[i] > (long long)2 * arr[right]) {
+            while (right <= high && arr[i] > 1LL * 2 * arr[right]) {
                 right++;
             }
             count += (right - (mid + 1));

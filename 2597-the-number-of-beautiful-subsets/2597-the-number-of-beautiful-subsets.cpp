@@ -1,28 +1,25 @@
 class Solution {
 public:
-    void f(vector<int>& nums, unordered_map<int,int>& mp, vector<int>& ans, int ind,int k){
-        if(ind<0)return;
+    void f(vector<int>& nums, map<int,int>& mp, int ind,int k){
+        if(ind<0) return;
 
         for(int i=ind;i>=0;i--){
-            if(!mp.empty() && mp.count(nums[i]) && mp[nums[i]]>0) continue;
-            ans.push_back(nums[i]);
+            if(!mp.empty() && mp.find(nums[i])!=mp.end()) continue;
             int temp=nums[i]-k;
             mp[temp]++;
             count++;
-            f(nums,mp,ans,i-1,k);
-            ans.pop_back();
+            f(nums,mp,i-1,k);
             mp[temp]--;
+            if(mp[temp]==0) mp.erase(temp);
         }
     }
     int count=0;
     int beautifulSubsets(vector<int>& nums, int k) {
         sort(nums.begin(),nums.end());
         int n=nums.size();
-        unordered_map<int,int> mp;
-        vector<int> ans;
+        map<int,int> mp;
         
-
-        f(nums,mp,ans,n-1,k);
+        f(nums,mp,n-1,k);
         return count;
     }
 };

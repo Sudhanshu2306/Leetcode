@@ -1,28 +1,16 @@
 class Solution {
 public:
     int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int k) {
-        vector<vector<pair<int,int>>> adj(n);
-        for(auto it:flights){
-            adj[it[0]].push_back({it[1],it[2]});
-        }
-
-        vector<int> dist(n,INT_MAX);
-        dist[src]=0;
-        queue<tuple<int,int,int>> q;
-        q.push({0,src,0});
-
-        while(!q.empty()){
-            auto [stops,node,d]=q.front(); q.pop();
-
-            if(stops>k) continue;
-
-            for(auto it:adj[node]){
-                if(d+it.second<dist[it.first]){
-                    dist[it.first]=d+it.second;
-                    q.push({stops+1,it.first,dist[it.first]});
-                }
+        vector<int> dp(n,INT_MAX);
+        dp[src]=0;
+        for(int i=0;i<=k;i++){
+            vector<int> temp=dp;
+            for(auto it:flights){
+                if(dp[it[0]]==INT_MAX) continue;
+                temp[it[1]]=min(dp[it[0]]+it[2],temp[it[1]]);
             }
+            dp=temp;
         }
-        return dist[dst]==INT_MAX?-1:dist[dst];
+        return dp[dst]==INT_MAX?-1:dp[dst];
     }
 };

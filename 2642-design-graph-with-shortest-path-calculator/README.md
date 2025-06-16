@@ -1,4 +1,4 @@
-<h2><a href="https://leetcode.com/problems/design-graph-with-shortest-path-calculator/">2642. Design Graph With Shortest Path Calculator</a></h2><h3>Hard</h3><hr><div><p>There is a <strong>directed weighted</strong> graph that consists of <code>n</code> nodes numbered from <code>0</code> to <code>n - 1</code>. The edges of the graph are initially represented by the given array <code>edges</code> where <code>edges[i] = [from<sub>i</sub>, to<sub>i</sub>, edgeCost<sub>i</sub>]</code> meaning that there is an edge from <code>from<sub>i</sub></code> to <code>to<sub>i</sub></code> with the cost <code>edgeCost<sub>i</sub></code>.</p>
+<h2><a href="https://leetcode.com/problems/design-graph-with-shortest-path-calculator">2642. Design Graph With Shortest Path Calculator</a></h2><h3>Hard</h3><hr><p>There is a <strong>directed weighted</strong> graph that consists of <code>n</code> nodes numbered from <code>0</code> to <code>n - 1</code>. The edges of the graph are initially represented by the given array <code>edges</code> where <code>edges[i] = [from<sub>i</sub>, to<sub>i</sub>, edgeCost<sub>i</sub>]</code> meaning that there is an edge from <code>from<sub>i</sub></code> to <code>to<sub>i</sub></code> with the cost <code>edgeCost<sub>i</sub></code>.</p>
 
 <p>Implement the <code>Graph</code> class:</p>
 
@@ -10,9 +10,10 @@
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
-<img alt="" src="https://assets.leetcode.com/uploads/2023/01/11/graph3drawio-2.png" style="width: 621px; height: 191px;">
-<pre><strong>Input</strong>
-["Graph", "shortestPath", "shortestPath", "addEdge", "shortestPath"]
+<img alt="" src="https://assets.leetcode.com/uploads/2023/01/11/graph3drawio-2.png" style="width: 621px; height: 191px;" />
+<pre>
+<strong>Input</strong>
+[&quot;Graph&quot;, &quot;shortestPath&quot;, &quot;shortestPath&quot;, &quot;addEdge&quot;, &quot;shortestPath&quot;]
 [[4, [[0, 2, 5], [0, 1, 2], [1, 2, 1], [3, 0, 3]]], [3, 2], [0, 3], [[1, 3, 4]], [0, 3]]
 <strong>Output</strong>
 [null, 6, -1, null, 6]
@@ -38,4 +39,3 @@ g.shortestPath(0, 3); // return 6. The shortest path from 0 to 3 now is 0 -&gt; 
 	<li>At most <code>100</code> calls will be made for <code>addEdge</code>.</li>
 	<li>At most <code>100</code> calls will be made for <code>shortestPath</code>.</li>
 </ul>
-</div>

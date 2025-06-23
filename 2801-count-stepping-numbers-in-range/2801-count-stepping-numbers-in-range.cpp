@@ -16,8 +16,7 @@ public:
         for(int d=0;d<=limit;d++){
             int new_tight=tight & (limit==d);
             if(zero==0 && d==0) count=(count+f(i+1,new_tight,prev,0,s))%mod;
-            else if(zero==0 && d>0) count=(count+f(i+1,new_tight,d,1,s))%mod;
-            else if(abs(d-prev)==1) count=(count+f(i+1,new_tight,d,1,s))%mod;
+            else if((zero==0 && d>0) || (abs(d-prev)==1)) count=(count+f(i+1,new_tight,d,1,s))%mod;
         }
 
         return dp[i][tight][prev][zero]=count;

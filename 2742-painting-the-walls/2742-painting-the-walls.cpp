@@ -1,15 +1,21 @@
 class Solution {
 public:
-    int paintWalls(std::vector<int>& cost, std::vector<int>& time) {
-        int n = cost.size();
-        std::vector<int> dp(n + 1, 1e9);
-        dp[0] = 0;
-       
-        for (int i = 0; i < n; ++i) {
-            for (int j = n; j > 0; --j) {
-                dp[j] = std::min(dp[j], dp[std::max(j - time[i] - 1, 0)] + cost[i]);
-            }
-        }
-        return dp[n]; 
+    int dp[505][505];
+    int f(int i, int k, vector<int> &cost, vector<int> &time){
+        if(k<=0) return 0;
+        if(i<0) return 1e9;
+
+        if(dp[i][k]!=-1) return dp[i][k];
+
+        int take=cost[i]+f(i-1,k-time[i]-1,cost,time);
+        int nottake=f(i-1,k,cost,time);
+
+        return dp[i][k]=min(take,nottake);
+    }
+    int paintWalls(vector<int>& cost, vector<int>& time) {
+        int n=cost.size();
+        memset(dp,-1,sizeof(dp));
+
+        return f(n-1,n,cost,time);
     }
 };

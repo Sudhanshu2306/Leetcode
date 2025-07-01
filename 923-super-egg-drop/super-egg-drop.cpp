@@ -1,6 +1,7 @@
 class Solution {
 public:
     int dp[10001][101];
+    // dp state is ki dp[n][k] represents we are able to explore nth floor, k eggs being used!
     int f(int k, int n){
         if(n==0 || n==1) return n;
         if(k==1) return n;
@@ -9,7 +10,7 @@ public:
 
         int mini=INT_MAX;
         int s=0,e=n;
-
+        // for determining floor we use BS
         while(s<=e){
             int mid=s+(e-s)/2;
             int down=f(k-1,mid-1);

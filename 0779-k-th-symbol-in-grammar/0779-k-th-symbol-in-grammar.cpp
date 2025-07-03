@@ -1,17 +1,11 @@
 class Solution {
 public:
     int kthGrammar(int n, int k) {
-        bool flag = true; 
+        if(n==1 && k==1) return 0;
+        int len=pow(2,n-1);
+        int mid=len/2;
 
-        int x = pow(2, n);
-
-        while (x != 1) {
-            x /= 2;
-            if (k > x) {
-                k -= x;
-                flag = !flag;
-            }
-        }
-        return ((flag) ? 0 : 1) ;
+        if(k<=mid) return kthGrammar(n-1,k);
+        else return !kthGrammar(n-1,k-mid);
     }
 };

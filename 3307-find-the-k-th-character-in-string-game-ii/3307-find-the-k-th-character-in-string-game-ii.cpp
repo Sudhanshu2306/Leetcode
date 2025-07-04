@@ -1,23 +1,25 @@
 class Solution {
 public:
     char kthCharacter(long long k, vector<int>& operations) {
+        int n=operations.size();
         if(k==1) return 'a';
 
-        int n=operations.size();
-        long long newK=-1, oper=-1;
+        long long newK=-1, op=-1;
         long long len=1;
         for(int i=0;i<n;i++){
             len*=2;
             if(len>=k){
                 newK=k-len/2;
-                oper=operations[i];
-                break;
+                op=operations[i]; break;
             }
         }
         char ch=kthCharacter(newK,operations);
-        if(oper==0) return ch;
-        else{
-            return ch=='z'?'a':ch+1;
+        if(op==0){
+            return ch;
         }
+        else{
+            if(ch=='z') return 'a';
+            else return ch+1;
+        } 
     }
 };

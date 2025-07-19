@@ -4,7 +4,7 @@ struct Node{
 
     Node(){
         this->flag=false;
-        for(int i=0;i<27;i++) links[i]=nullptr;
+        for(int i=0;i<=26;i++) links[i]=nullptr;
     }
 };
 class Trie{

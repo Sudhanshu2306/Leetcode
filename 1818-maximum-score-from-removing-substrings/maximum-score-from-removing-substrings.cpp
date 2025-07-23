@@ -1,39 +1,33 @@
 class Solution {
 public:
-    int f(string &s,string temp){
-        int n=s.size();
+    int f(string &s, string t){
         stack<char> st;
-
-        int score=0; int ans=0;
-        for(int i=0;i<n;i++){
-            if(!st.empty() && s[i]==temp[1] && st.top()==temp[0]){
-                st.pop(); score++;
-            } 
-            else st.push(s[i]);
+        int count=0;
+        for(int i=0;i<s.size();i++){
+            if(!st.empty() && st.top()==t[0] && s[i]==t[1]){
+                count++; st.pop();
+            }
+            else{
+                st.push(s[i]);
+            }
         }
-        // cout<<score<<" ";
         s="";
-        while(!st.empty()){
+        while(!st.empty()){ 
             s+=st.top(); st.pop();
         }
         reverse(s.begin(),s.end());
-
-        return score;
+        return count;
     }
-
     int maximumGain(string s, int x, int y) {
-        string mini, maxi;
         if(x>y){
-            mini="ba";
-            maxi="ab";
+            int a=f(s,"ab")*x;
+            int b=f(s,"ba")*y;
+            return a+b;
         }
         else{
-            mini="ab";
-            maxi="ba";
-            swap(x,y);
+            int a=f(s,"ba")*y;
+            int b=f(s,"ab")*x;
+            return a+b;
         }
-        int a=f(s,maxi)*x;
-        int b=f(s,mini)*y;
-        return a+b;
     }
 };

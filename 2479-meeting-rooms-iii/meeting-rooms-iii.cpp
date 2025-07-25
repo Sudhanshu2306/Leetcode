@@ -22,23 +22,16 @@ public:
                 q.pop();
             }
             else{
-                // while(!pq.empty()){
-                //     if(pq.top().first<=s){
-                //         q.push(pq.top().second);
-                //         pq.pop();
-                //     }
-                //     else break;
+                // if(!q.empty()){
+                //     pq.push({e,q.top()}); 
+                //     count[q.top()]++;
+                //     q.pop();
                 // }
-                if(!q.empty()){
-                    pq.push({e,q.top()}); 
-                    count[q.top()]++;
-                    q.pop();
-                }
-                else{
+                // else{
                     auto [en,rm]=pq.top(); pq.pop();
                     pq.push({e+max(0LL,en-s),rm});
                     count[rm]++;
-                }
+                // }
             }
         }
         int maxi=*max_element(count.begin(),count.end());

@@ -1,27 +1,24 @@
 class Solution {
 public:
-    int f(vector<vector<int>> &a){
-        int ans=1e5;
-        bool flag=true;
+    int minimumMoves(vector<vector<int>>& grid) {
+        bool flag=false;
+        int ans=1e9;
         for(int i=0;i<3;i++){
             for(int j=0;j<3;j++){
-                if(a[i][j]==0){
-                    flag=false;
-                    for(int x=0;x<3;x++){
-                        for(int y=0;y<3;y++){
-                            if(a[x][y]>1){
-                                a[x][y]--; a[i][j]=1; 
-                                ans=min(ans,abs(x-i)+abs(y-j)+f(a));
-                                a[i][j]=0; a[x][y]++;
+                if(grid[i][j]==0){
+                    flag=true;
+                    for(int k=0;k<3;k++){
+                        for(int l=0;l<3;l++){
+                            if(grid[k][l]>1){
+                                grid[k][l]--; grid[i][j]++;
+                                ans=min(ans,abs(i-k)+abs(l-j)+minimumMoves(grid));
+                                grid[k][l]++; grid[i][j]--;
                             }
                         }
                     }
                 }
             }
         }
-        return flag?0:ans;
-    }
-    int minimumMoves(vector<vector<int>>& grid) {
-        return f(grid);
+        return flag?ans:0;
     }
 };

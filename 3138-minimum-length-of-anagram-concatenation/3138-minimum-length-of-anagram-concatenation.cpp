@@ -1,21 +1,28 @@
 class Solution {
 public:
     int minAnagramLength(string s) {
-        unordered_map<char, int> mp;
-        for(int i=0;i<s.size();i++){
-            mp[s[i]]++;
-        }
-        char ch=s[0];
-        int x=mp[ch];
-        for(auto it:mp){
-            x=__gcd(x,it.second);
-        }
-        int ans=0;
-        for(auto i:mp){
-            if(i.second>=x){
-                ans+=(i.second/x);
+        map<char,int> mp;
+        for(char c:s) mp[c]++;
+
+        int g=0;
+        for(auto it:mp) g=__gcd(g,it.second);
+
+        int n=s.size();
+        for(int k=(n/g);k<=n;k+=(n/g)){
+            if(n%k!=0) continue;
+
+            vector<int> f(26,0);
+            for(int i=0;i<k;i++) f[s[i]-'a']++;
+
+            bool flag=true;
+            for(int i=k;i<n;i+=k){
+                vector<int> cnt(26,0);
+                for(int j=0;j<k;j++) cnt[s[i+j]-'a']++;
+                if(cnt!=f){ flag = false; break; }
             }
+
+            if(flag) return k;
         }
-        return ans;
+        return n; 
     }
 };

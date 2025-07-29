@@ -7,7 +7,7 @@ public:
 
         for(int i=n-1;i>=0;i--){
             for(int k=0;k<31;k++){
-                if((nums[i]&(1<<k))>0) closest[k]=i;
+                if((nums[i]>>k)&1) closest[k]=i;
                 ans[i]=max(ans[i],closest[k]-i+1);
             }
         }

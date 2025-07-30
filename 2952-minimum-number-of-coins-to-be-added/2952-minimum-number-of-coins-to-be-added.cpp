@@ -1,30 +1,21 @@
 class Solution {
 public:
     int minimumAddedCoins(vector<int>& coins, int target) {
-        sort(coins.begin(),coins.end());
         int count=0;
-        int obtainable=0;
-        
-        for(auto i:coins){
-            while(i>obtainable+1){
-                count++;
-                int x=obtainable+1;
-                obtainable+=x;
-                if(obtainable>=target){
-                    return count;
-                }
-            }
-            obtainable+=i;
-            if(obtainable>=target){
-                return count;
+        int curr=1;
+        sort(coins.begin(),coins.end());
+        for(int i=0;i<coins.size() && curr<=target;i++){
+            if(curr==coins[i]) curr*=2;
+            else if(curr>coins[i]) curr+=coins[i];
+            else{
+                count++; curr*=2; i--;
             }
         }
-        while(obtainable<target){
+        while(curr<=target){
+            curr*=2;
             count++;
-            int x=obtainable+1;
-            obtainable+=x;
         }
+        // if(curr<=target) return count+1;
         return count;
     }
 };
-

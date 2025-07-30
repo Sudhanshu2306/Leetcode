@@ -23,15 +23,10 @@ public:
             else if(mid==0){
                 if(nums[0]>nums[1])
                     return 0;
-                else
-                    return 1;
-                
             }
             else if(mid==size-1){
                 if(nums[size-1]>nums[size-2])
                     return size-1;
-                else 
-                    return size-2;
             }
         }
         return -1;

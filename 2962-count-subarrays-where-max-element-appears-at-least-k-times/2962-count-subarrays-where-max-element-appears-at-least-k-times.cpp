@@ -1,21 +1,20 @@
+typedef long long ll;
 class Solution {
 public:
     long long countSubarrays(vector<int>& nums, int k) {
-        long long count=0;
-        int n=nums.size();
-
-        int i=0,j=0;
-        long long maxi=*max_element(nums.begin(),nums.end());
-        long long temp=0;
+        ll n=nums.size();
+        ll maxi=*max_element(nums.begin(),nums.end());
+        ll count=0;
+        ll i=0,j=0;
+        ll len=0;
         while(j<n){
-            if(nums[j]==maxi) temp++;
-            if(temp>=k){
-                count+=((n-1-j)+1);
-                while(i<=j && temp>=k){
-                    if(nums[i]==maxi) temp--;
-
-                    if(temp>=k) count+=((n-1-j)+1);
+            if(nums[j]==maxi) len++;
+            if(len>=k){
+                count+=(n-1-j)+1;
+                while(len>=k && i<=j){
+                    if(nums[i]==maxi) len--;
                     i++;
+                    if(len>=k) count+=(n-j-1)+1;
                 }
             }
             j++;

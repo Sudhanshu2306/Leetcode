@@ -2,9 +2,9 @@ class Solution {
 public:
     long long continuousSubarrays(vector<int>& nums) {
         long long ans=0;
-        map<int,int> mp;
         int n=nums.size();
-        int i=0,j=0;
+        int i=0, j=0;
+        map<int,int> mp;
         while(j<n){
             mp[nums[j]]++;
             while(mp.rbegin()->first-mp.begin()->first>2){
@@ -16,5 +16,6 @@ public:
             j++;
         }
         return ans;
+
     }
 };

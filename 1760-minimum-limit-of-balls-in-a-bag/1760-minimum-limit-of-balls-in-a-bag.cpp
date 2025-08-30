@@ -1,22 +1,28 @@
+typedef long long ll;
 class Solution {
 public:
-
-    bool ff(vector<int> &nums, int maxOperations, int mid){
-        int x=0;
-        for(int i=0;i<nums.size();i++) x+=(nums[i]+mid-1)/mid -1;
-        return x<=maxOperations;
+    int totalBalls;
+    bool f(int mid, vector<int> &nums){
+        ll count=0;
+        for(auto it:nums){
+            if(it%mid==0) count+=(it/mid);
+            else count+=(it/mid)+1;
+        }
+        return count<=totalBalls;
     }
-
-    int minimumSize(vector<int>& nums, int maxOperations) {
+    int minimumSize(vector<int>& nums, int maxOP) {
+        totalBalls=nums.size()+maxOP;
         int n=nums.size();
-        int s=1,e=1e9;
-        int ans=0;
-        
+
+        ll s=1, e=1e9;
+        ll ans=e;
         while(s<=e){
-            int mid=s+(e-s)/2; // mid is the maximum size of bag
-            if(ff(nums,maxOperations,mid)){
-                ans=mid; e=mid-1;
-            } 
+            ll mid=s+(e-s)/2;
+
+            if(f(mid,nums)){
+                ans=mid;
+                e=mid-1;
+            }
             else s=mid+1;
         }
         return ans;

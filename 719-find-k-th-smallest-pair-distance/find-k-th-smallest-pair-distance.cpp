@@ -1,26 +1,24 @@
 class Solution {
 public:
-    bool f(const vector<int>& nums, int k, int mid) {
-        int count=0, left=0;
-        for(int i=1;i<nums.size();i++){
-            while(nums[i]-nums[left]>mid) left++;
-            count+=i-left;
+    bool f(vector<int> &nums, int mid, int k){
+        int count=0;
+        int i=0;
+        for(int j=1;j<nums.size();j++){
+            while(nums[j]-nums[i]>mid) i++;
+            count+=(j-i);
         }
         return count>=k;
     }
     int smallestDistancePair(vector<int>& nums, int k) {
-        sort(nums.begin(), nums.end());
+        sort(nums.begin(),nums.end());
+        int maxi=nums.back(), mini=nums[0];
 
-        int n=nums.size();
-        int left=0;
-        int right=nums[n-1]-nums[0];
-
-        while(left<right){
-            int mid=left+(right-left)/2;
-
-            if(f(nums,k,mid)) right = mid;
-            else left=mid+1;
+        int s=0, e=maxi-mini;
+        while(s<=e){
+            int mid=s+(e-s)/2;
+            if(f(nums,mid,k)) e=mid-1;
+            else s=mid+1;
         }
-        return left;
+        return s;
     }
 };

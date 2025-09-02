@@ -33,10 +33,11 @@ class DisjointSet{
 class Solution {
 public:
     vector<vector<string>> accountsMerge(vector<vector<string>>& accounts) {
-        unordered_map<string,int> mp;
         int n=accounts.size();
+        unordered_map<string,int> mp;
         DisjointSet ds(n);
-        for(int i=0;i<accounts.size();i++){
+
+        for(int i=0;i<n;i++){
             for(int j=1;j<accounts[i].size();j++){
                 string mail=accounts[i][j];
                 if(mp.find(mail)==mp.end()){
@@ -48,21 +49,20 @@ public:
             }
         }
 
-        vector<string> merge[n];
+        vector<string> mail[n];
         for(auto i:mp){
-            string mail=i.first;
             int node=ds.findParent(i.second);
-            merge[node].push_back(mail);
+            mail[node].push_back(i.first);
         }
 
         vector<vector<string>> ans;
         for(int i=0;i<n;i++){
-            if(merge[i].size()==0) continue;
-            sort(merge[i].begin(),merge[i].end());
+            if(mail[i].size()==0) continue;
             vector<string> temp;
+            sort(mail[i].begin(),mail[i].end());
             temp.push_back(accounts[i][0]);
-            for(auto it:merge[i]){
-                temp.push_back(it);
+            for(string j:mail[i]){
+                temp.push_back(j);
             }
             ans.push_back(temp);
         }
